@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test html file.</title>
+</head>
+<body>
+  <form>
+    <input type="text" name="from" placeholder="From" /><br>
+    <input type="text" name="to" placeholder="To" />
+    <div><input type="submit" name="route-button" value="Route"></div>
+    <br>
+  </form>
+  <form>
+    <label>Where do you want to eat?</label>
+    <input type="text" name="location"/>
+    <label>How far away from your route are you willing to travel?</label>
+    <input type="text" name="radius"/> <!-- this would be a number thing, and right now the code assumes it's not empty -->
+    <input type="submit" name="rest-button" value="Click here" />
+  </form>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+  $(function() {
+    $('input[name="rest-button"]').click(function(ev) {
+      ev.preventDefault();
+      var location = $('input[name="location"]').val(),
+      radius_filter = $('input[name="radius"]').val();
+      // ll = '[latitude],[longitude]';
+      $.ajax({
+        url: '/stop/'+location+'/'+radius_filter,
+        type: "GET",
+        success: function(result) {
+          stuff = JSON.parse(result);
+        }
+      });
+    });
+    
+  })
+
+  </script>
+</body>
+</html>
