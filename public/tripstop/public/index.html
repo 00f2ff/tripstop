@@ -3,12 +3,38 @@
 <head>
   <meta charset="utf-8">
   <title>Test html file.</title>
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 300px;
+        width: 700px;
+      }
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+    </style>
+
 </head>
 <body>
   <form>
-    <input type="text" name="from" placeholder="From" /><br>
-    <input type="text" name="to" placeholder="To" />
-    <div><input type="submit" name="route-button" value="Route"></div>
+    <input type="text" name="origin" placeholder="From" /><br>
+    <input type="text" name="destination" placeholder="To" />
+    <div><button id="route-button">Route</button></div>
     <br>
   </form>
   <form>
@@ -19,9 +45,48 @@
     <input type="submit" name="rest-button" value="Click here" />
   </form>
 
+  <div style="width: 600px;">
+     <div id="map" style="width: 280px; height: 400px; float: left;"></div> 
+     <div id="panel" style="width: 300px; height: 400px; overflow-y: scroll; float: right;"></div> 
+   </div>
+
+
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&signed_in=false"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
+
+  <script type="text/javascript"> 
   $(function() {
+
+   })
+   </script> 
+  <script>
+  /* in future i'd want to let people choose between tolls, ferries, etc, choose alternate routes, etc */
+  $(function() {
+    var directionsService = new google.maps.DirectionsService();
+     var directionsDisplay = new google.maps.DirectionsRenderer();
+
+     var map = new google.maps.Map(document.getElementById('map'), {
+       zoom:7,
+       mapTypeId: google.maps.MapTypeId.ROADMAP
+     });
+
+     directionsDisplay.setMap(map);
+     directionsDisplay.setPanel(document.getElementById('panel'));
+
+     function makeRequest(origin, destination) {
+        var request = {
+         origin: origin, 
+         destination: destination,
+         travelMode: google.maps.DirectionsTravelMode.DRIVING
+       };
+
+       directionsService.route(request, function(response, status) {
+         if (status == google.maps.DirectionsStatus.OK) {
+           directionsDisplay.setDirections(response);
+         }
+       });
+     }
+
     $('input[name="rest-button"]').click(function(ev) {
       ev.preventDefault();
       var location = $('input[name="location"]').val(),
@@ -35,9 +100,60 @@
         }
       });
     });
+
+    // initMap();
+
+    $('button#route-button').click(function(ev) {
+        // onChangeHandler;
+        makeRequest($('input[name="origin"]').val(), $('input[name="destination"]').val());
+        ev.preventDefault();
+        
+      });
+
+    
     
   })
-
   </script>
+  // <script>
+  //   function initMap() {
+  //     var directionsService = new google.maps.DirectionsService;
+  //     var directionsDisplay = new google.maps.DirectionsRenderer;
+  //     var map = new google.maps.Map(document.getElementById('map'), {
+  //       zoom: 7,
+  //       center: {lat: 41.85, lng: -87.65} // change to be user's location
+  //     });
+  //     directionsDisplay.setMap(map);
+
+  //     var onChangeHandler = function(ev) {
+  //       console.log($('input[name="origin"]').val());
+  //       calculateAndDisplayRoute(directionsService, directionsDisplay);
+  //     };
+  //     $('button#route-button').click(function(ev) {
+  //       console.log('hi');
+  //       onChangeHandler;
+  //       ev.preventDefault();
+        
+  //     });
+  //     // document.getElementById('start').addEventListener('change', onChangeHandler);
+  //     // document.getElementById('end').addEventListener('change', onChangeHandler);
+  //   }
+
+  //   function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  //     directionsService.route({
+  //       origin: $('input[name="origin"]').val(), 
+  //       destination: $('input[name="destination"]').val(), 
+  //       // origin: document.getElementById('start').value,
+  //       // destination: document.getElementById('end').value,
+  //       travelMode: google.maps.TravelMode.DRIVING
+  //     }, function(response, status) {
+  //       if (status === google.maps.DirectionsStatus.OK) {
+  //         directionsDisplay.setDirections(response);
+  //       } else {
+  //         window.alert('Directions request failed due to ' + status);
+  //       }
+  //     });
+  //   }
+  // </script>
+
 </body>
 </html>
