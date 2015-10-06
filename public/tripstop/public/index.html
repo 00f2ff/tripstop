@@ -3,58 +3,67 @@
 <head>
   <meta charset="utf-8">
   <title>Test html file.</title>
-<style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 300px;
-        width: 700px;
-      }
-#floating-panel {
-  position: absolute;
-  top: 10px;
-  left: 25%;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
-}
-
-    </style>
-
-</head>
-<body>
-  <form>
-    <input type="text" name="origin" placeholder="From" /><br>
-    <input type="text" name="destination" placeholder="To" />
-    <div><button id="route-button">Route</button></div>
-    <br>
-  </form>
-  <form>
-    <label>Where do you want to eat?</label>
-    <input type="text" name="location"/>
-    <label>How far away from your route are you willing to travel?</label>
-    <input type="text" name="radius"/> <!-- this would be a number thing, and right now the code assumes it's not empty -->
-    <input type="submit" name="rest-button" value="Click here" />
-  </form>
-
-  <div style="width: 600px;">
-     <div id="map" style="width: 280px; height: 400px; float: left;"></div> 
-     <div id="panel" style="width: 300px; height: 400px; overflow-y: scroll; float: right;"></div> 
-   </div>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/CSS/style.css">
 
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&signed_in=false"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
 
   <script src="./scripts/page.js"></script> 
 
+</head>
+<body>
+  <div class="header">
+    CHOMP
+  </div>
+  <div class="content">
+    <div id="bg">
+        <img src="/index.jpg" alt="">
+
+    <form>
+      <input type="text" name="origin" placeholder="From" class="place" /><br>
+      <input type="text" name="destination" placeholder="To" class="place" />
+      <!-- <div><button id="route-button">Route</button></div> -->
+      <br>
+    </form>
+
+    <form>
+      <div class="input">
+        <label>Stop after </label>
+        <select>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <label>hours</label>
+      </div>
+      <div class="input">
+        <label>Stay within </label>
+        <select>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <label>miles</label>
+      </div>
+      <div class="submit">
+        <button type="button" class="btn btn-default">Find Restaurants</button>
+      </div>
+    </form>
+
+    </div>
+    <!-- <div style="width: 600px;">
+       <div id="map" style="width: 280px; height: 400px; float: left;"></div> 
+       <div id="panel" style="width: 300px; height: 400px; overflow-y: scroll; float: right;">
+       </div> 
+     </div> -->
+  </div>
+  <div class="footer">
+  </div>
+
 </body>
+
+
 </html>
