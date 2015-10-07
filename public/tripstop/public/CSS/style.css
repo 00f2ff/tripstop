@@ -39,13 +39,28 @@ html, body {
   padding-top: 15px;
 }
 .input {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  float: center;
+
+  margin: 5px auto;
   text-align: center;
 }
+.input div {
+  display: inline-block;
+}
+.input div:first-child {
+  padding-right: 5px;
+}
+.input div:last-child {
+  padding-left: 5px;
+}
+
 .submit {
   margin-top: 25px;
   text-align: center;
 }
 
+.placeinput {
+  color: black;
+  width: 95vw;
+  margin: 7px 10px 10px 10px;
+  padding: 7px 10px 10px 10px;
+}
