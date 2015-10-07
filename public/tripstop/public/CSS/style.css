@@ -158,15 +158,12 @@ html, body {
   user-select: none;
 }
 
-
-
-
 #map {
   width: 100vw;
-  height: 70vh;
+  height: 60vh;
 }
 #panel {
   width: 100vw;
-  height: 30vh;
+  height: 40vh;
   overflow-y: scroll;
 }

@@ -1,6 +1,7 @@
 /* in future i'd want to let people choose between tolls, ferries, etc, choose alternate routes, etc */
 /* I would also want to search for more restaurants, so code in an offset at some point */
 /* A smarter version would remove convenience stores and gas stations from results and then query for more (or just query for a lot then remove results) */
+/* also add more touch events (directions vs map resizing, etc) */
   $(function() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -30,8 +31,7 @@
         var categories = [].concat.apply([], b.categories);
         categories = categories.filter(function(el, index) {
           return !(index % 2);
-        }).join(', ')
-        console.log(categories);
+        }).slice(0,2).join(', '); // trim down
 
         var listing = '<div class="rest">\
                         <div class="rest-name"><a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a></div><div class="'+closed_class+'">'+closed_message+'</div>\
@@ -43,14 +43,23 @@
         $('.restaurants-container').append(listing);
       }
       // apply click handler that sends mapping information
-      // $('.rest-select').click(function() {
-      //   // loop through businesses searching for id
-      //   for (var i = 0; i < businesses.length; i++) {
-      //     if businesses[i].id == $(this).attr('id') {
-            
-      //     }
-      //   }
-      // })
+      $('.rest-select').click(function() {
+        // loop through businesses searching for id
+        for (var i = 0; i < businesses.length; i++) {
+          if (businesses[i].id == $(this).attr('id')) {
+            // if user changed these, then too bad (at least for demo version)
+            var origin = $('input[name="origin"]').val();
+            var lat = businesses[i].location.coordinate.latitude,
+                lng = businesses[i].location.coordinate.longitude;
+            var ll = new google.maps.LatLng(lat,lng);
+            var waypoint = [{location: ll, stopover: true}];
+            console.log(waypoint);
+            var destination = $('input[name="destination"]').val();
+            makeRequest(origin, waypoint, destination, true); // show maps and directions now
+            console.log(businesses[i]);
+          }
+        }
+      })
     }
 
     function findStopStep(steps) {
@@ -62,7 +71,6 @@
         index++;
       }
       index -= 1; // go back to step that took time below 0 (so farther along than we want)
-      console.log(steps[index]);
       // find yelp data
       var radius_filter = parseInt($('input[name="radius"]').val(),10) * 1609.34; // convert to meters
       var ll = steps[index].end_location.lat() + ',' + steps[index].end_location.lng();
@@ -90,11 +98,11 @@
 
       directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-          var steps = response.routes[0].legs[0].steps; // this would differ if there were more routes/legs
-          console.log(steps)
-          var stopStep = findStopStep(steps);
-          if (finalRoute) { // not initial find
+          if (finalRoute) { // show directions
             directionsDisplay.setDirections(response); 
+          } else { // find yelp data based on response information
+            var steps = response.routes[0].legs[0].steps; // this would differ if there were more routes/legs
+            var stopStep = findStopStep(steps);
           }
         }
       });
@@ -129,8 +137,8 @@
       var origin = $('input[name="origin"]').val(), 
           destination = $('input[name="destination"]').val();
       // generate map
-      // makeRequest(origin, destination);
-      makeRequest('washington dc',[],'pittsburgh pa', false); // no waypoints, not final route
+      makeRequest(origin, [], destination, false); // no waypoints, not final route
+      // makeRequest('washington dc',[],'pittsburgh pa', false); 
       // ev.preventDefault();
     })
     
