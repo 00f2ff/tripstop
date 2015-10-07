@@ -35,9 +35,10 @@
       });
     }
 
-    function makeRequest(origin, destination, finalRoute) {
+    function makeRequest(origin, waypoints, destination, finalRoute) {
       var request = {
         origin: origin, 
+        waypoints: waypoints,
         destination: destination, // add waypoint soon
         travelMode: google.maps.DirectionsTravelMode.DRIVING
       };
@@ -54,33 +55,12 @@
     }
 
     $('button#find-restaurants').click(function(ev) {
-      var hours = $('input[name="hours"]').val(),
-          radius = $('input[name="radius"]').val(),
-          origin = $('input[name="origin"]').val(), 
+      var origin = $('input[name="origin"]').val(), 
           destination = $('input[name="destination"]').val();
       // generate map
       // makeRequest(origin, destination);
-      makeRequest('washington dc','pittsburgh pa', false);
-      ev.preventDefault();
+      makeRequest('washington dc',[],'pittsburgh pa', false); // no waypoints, not final route
+      // ev.preventDefault();
     })
-
-    $('input[name="rest-button"]').click(function(ev) {
-      ev.preventDefault();
-      var location = $('input[name="location"]').val(),
-      radius_filter = $('input[name="radius"]').val();
-      // ll = '[latitude],[longitude]';
-      $.ajax({
-        url: '/stop/'+location+'/'+radius_filter,
-        type: "GET",
-        success: function(result) {
-          stuff = JSON.parse(result);
-        }
-      });
-    });
-
-    $('button#route-button').click(function(ev) { // add waypoint soon
-        makeRequest($('input[name="origin"]').val(), $('input[name="destination"]').val());
-        ev.preventDefault();
-      });
     
   })

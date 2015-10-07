@@ -1,24 +1,29 @@
-
-#bg img {
-        background: url(http://4.bp.blogspot.com/_ZmCuIZbFJ10/TLatRXPS9nI/AAAAAAAAAXw/oyUDi-btfLc/s1600/Southwest+Desert+Road.jpg);
+#bg {
+  position: absolute;
+  background: url(http://4.bp.blogspot.com/_ZmCuIZbFJ10/TLatRXPS9nI/AAAAAAAAAXw/oyUDi-btfLc/s1600/Southwest+Desert+Road.jpg);
         background-size: cover;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         height: 100%;
         width: 100%;
-        position: fixed;
+        
         background-position: center center;
         background-repeat: no-repeat;
-        z-index:-5;
         opacity: .3;
+}
+#bg img {
+        
 }
 
 html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+
 #map {
   height: 300px;
   width: 700px;
