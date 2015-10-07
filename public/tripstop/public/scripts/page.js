@@ -14,7 +14,8 @@
     function findStopStep(steps) {
       var time = parseInt($('input[name="hours"]').val(),10) * 60 * 60; // conversion to step duration value (seconds)
       var index = 0;
-      while (time > 0) {
+      // this loop stops when it finds the step at which the user wants to stop, or there are no more steps (reached destination)
+      while (time > 0 && index < steps.length) {
         time -= steps[index].duration.value;
         index++;
       }
@@ -46,6 +47,7 @@
       directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           var steps = response.routes[0].legs[0].steps; // this would differ if there were more routes/legs
+          console.log(steps)
           var stopStep = findStopStep(steps);
           if (finalRoute) { // not initial find
             directionsDisplay.setDirections(response); 
@@ -53,6 +55,28 @@
         }
       });
     }
+
+    // Hardcoded buttons
+    $('.hours-input .minus').click(function() {
+      if (parseInt($('input[name="hours"]').val(),10) > 1) {
+        $('input[name="hours"]').val(parseInt($('input[name="hours"]').val(),10)-1);
+      }
+    });
+    $('.hours-input .plus').click(function() {
+      if (parseInt($('input[name="hours"]').val(),10) < 12) {
+        $('input[name="hours"]').val(parseInt($('input[name="hours"]').val(),10)+1);
+      }
+    });
+    $('.radius-input .minus').click(function() {
+      if (parseInt($('input[name="radius"]').val(),10) > 1) {
+        $('input[name="radius"]').val(parseInt($('input[name="radius"]').val(),10)-1);
+      }
+    });
+    $('.radius-input .plus').click(function() {
+      if (parseInt($('input[name="radius"]').val(),10) < 25) {
+        $('input[name="radius"]').val(parseInt($('input[name="radius"]').val(),10)+1);
+      }
+    });
 
     $('button#find-restaurants').click(function(ev) {
       var origin = $('input[name="origin"]').val(), 

@@ -31,15 +31,23 @@
           <td>miles</td>
         </tr>
       </table> -->
-      <div class="input">
+      <div class="input hours-input">
         <div>Stop after</div>
-        <div><input type="text" data-role="spinbox" name="hours" value="2" min="0" max="12" /></div>
+        <div>
+          <div class="pm-symbol minus">-</div>
+          <input class="pm" type="text" name="hours" value="2"/>
+          <div class="pm-symbol plus">+</div>
+        </div>
         <div>hours</div>
       </div>
       <br>
-      <div class="input">
+      <div class="input radius-input">
         <div>Stay within </div>
-        <div><input type="text" data-role="spinbox" name="radius" value="1" min="0" max="25" /></div> 
+        <div>
+          <div class="pm-symbol minus">-</div>
+          <input class="pm" type="text" name="radius" value="2"/>
+          <div class="pm-symbol plus">+</div>
+        </div> 
         <div>miles</div>
       </div>
       <div class="submit">
@@ -64,7 +72,6 @@
   <!-- < script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&signed_in=false"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
   <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
-  <script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
   <script src="./scripts/page.js"></script> 
 
 </body>
