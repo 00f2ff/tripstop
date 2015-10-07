@@ -10,6 +10,10 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&signed_in=false"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
+  <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+  <script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
+
 
   <script src="./scripts/page.js"></script> 
 
@@ -23,29 +27,24 @@
         <img src="/index.jpg" alt="">
 
     <form>
-      <input type="text" name="origin" placeholder="From" class="place" /><br>
+      <div class="placeinput">
+      <input type="text" name="origin" placeholder="From" class="place" />
       <input type="text" name="destination" placeholder="To" class="place" />
       <!-- <div><button id="route-button">Route</button></div> -->
-      <br>
+    </div>
     </form>
 
     <form>
       <div class="input">
-        <label>Stop after </label>
-        <select>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <label>hours</label>
+        <div class="ui-field-contain">
+          <label for="spin">Stop after</label>
+          <input type="text" data-role="spinbox" name="spin" data-options='{"type":"horizontal"}' id="spin" value="1" min="0" max="12" />
+        hours</div>
       </div>
+    </br>
       <div class="input">
         <label>Stay within </label>
-        <select>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+            <input type="text" data-role="spinbox" name="spin" id="spin" value="1" min="0" max="50" />
         <label>miles</label>
       </div>
       <div class="submit">

@@ -62,3 +62,9 @@ html, body {
   text-align: center;
 }
 
+.placeinput {
+  color: black;
+  width: 95vw;
+  margin: 7px 10px 10px 10px;
+  padding: 7px 10px 10px 10px;
+}
