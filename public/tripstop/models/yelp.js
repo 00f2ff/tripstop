@@ -24,7 +24,7 @@ var yelp = {
   /* We can setup default parameters here */
   var default_parameters = {
     sort: '2', // highest rated
-    limit: '10' // make lower?
+    limit: '5' // make lower?
   };
 
   /* We set the require parameters here */
