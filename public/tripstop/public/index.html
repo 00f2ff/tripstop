@@ -2,68 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Test html file.</title>
-</head>
+  <title>Chomp</title>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/CSS/style.css">
-
-
- 
-
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
 </head>
 <body>
   <div class="header">
     CHOMP
   </div>
-  <div class="content">
-    <div id="bg">
-        <img src="/index.jpg" alt="">
+  <div class="form-container">
 
     <form>
-      <input type="text" name="origin" placeholder="From" class="place" /><br>
-      <input type="text" name="destination" placeholder="To" class="place" />
-      <!-- <div><button id="route-button">Route</button></div> -->
-      <br>
-    </form>
-
-    <form>
-      <div class="input">
-        <label>Stop after </label>
-        <select>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <label>hours</label>
+      <div class="placeinput">
+        <input type="text" name="origin" placeholder="From" class="place" />
+        <input type="text" name="destination" placeholder="To" class="place" />
+        <!-- <div><button id="route-button">Route</button></div> -->
       </div>
-      <div class="input">
-        <label>Stay within </label>
-        <select>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <label>miles</label>
+      <!-- <table>
+        <tr>
+          <td>Stop after</td>
+          <td><input type="text" data-role="spinbox" name="spin" value="2" min="0" max="12" /></td>
+          <td>hours</td>
+        </tr>
+        <tr>
+          <td>Stay within </td>
+          <td><input type="text" data-role="spinbox" name="spin" value="1" min="0" max="25" /></td>
+          <td>miles</td>
+        </tr>
+      </table> -->
+      <div class="input hours-input">
+        <div>Stop after</div>
+        <div>
+          <div class="pm-symbol minus">-</div>
+          <input class="pm" type="text" name="hours" value="2"/>
+          <div class="pm-symbol plus">+</div>
+        </div>
+        <div>hours</div>
+      </div>
+      <br>
+      <div class="input radius-input">
+        <div>Stay within </div>
+        <div>
+          <div class="pm-symbol minus">-</div>
+          <input class="pm" type="text" name="radius" value="2"/>
+          <div class="pm-symbol plus">+</div>
+        </div> 
+        <div>miles</div>
       </div>
       <div class="submit">
-        <button type="button" class="btn btn-default">Find Restaurants</button>
+        <button type="button" id="find-restaurants" class="btn btn-default">Find Restaurants</button>
       </div>
     </form>
-
-    </div>
-    <!-- <div style="width: 600px;">
-       <div id="map" style="width: 280px; height: 400px; float: left;"></div> 
-       <div id="panel" style="width: 300px; height: 400px; overflow-y: scroll; float: right;">
-       </div> 
-     </div> -->
+    <!-- <div id="bg">
+        <img src="/index.jpg" alt="">
+    </div> -->
   </div>
+
+  <div class="restaurants-container">
+    
+  </div>
+
+  <div class="directions-container">
+     <div id="map"></div> 
+     <div id="panel"></div> 
+   </div>
   <div class="footer">
   </div>
 
-   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- < script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&signed_in=false"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
-
+  <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
   <script src="./scripts/page.js"></script> 
 
 </body>

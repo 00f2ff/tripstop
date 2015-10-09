@@ -15,7 +15,7 @@ app.set('views', __dirname + '/views');
 app.use(morgan('dev'))
 
 
-app.get('/stop/:location/:radius_filter', yelpRoute.findRestaurants);
+app.get('/stop/:ll/:radius_filter', yelpRoute.findRestaurants);
 
 
 // load static pages

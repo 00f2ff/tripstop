@@ -1,41 +1,27 @@
-
-#bg img {
-        background: url(http://4.bp.blogspot.com/_ZmCuIZbFJ10/TLatRXPS9nI/AAAAAAAAAXw/oyUDi-btfLc/s1600/Southwest+Desert+Road.jpg);
+#bg {
+  position: absolute;
+  background: url(http://4.bp.blogspot.com/_ZmCuIZbFJ10/TLatRXPS9nI/AAAAAAAAAXw/oyUDi-btfLc/s1600/Southwest+Desert+Road.jpg);
         background-size: cover;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         height: 100%;
         width: 100%;
-        position: fixed;
+        
         background-position: center center;
         background-repeat: no-repeat;
-        z-index:-5;
         opacity: .3;
+}
+#bg img {
+        
 }
 
 html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 300px;
-        width: 700px;
-      }
-#floating-panel {
-  position: absolute;
-  top: 10px;
-  left: 25%;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
+
 .header {
   height: 40px;
   background-color: #474747;
@@ -51,14 +37,133 @@ html, body {
 .content{
   padding-top: 15px;
 }
+
+
 .input {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  float: center;
+  /*margin: 5px auto;*/
   text-align: center;
 }
+.input div {
+  display: inline-block;
+}
+.input .pm-symbol {
+  /*padding: 10px 10px;*/
+  padding: 0;
+  margin: 0;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  line-height: 30px;
+  background-color: gray;
+  text-align: center;
+  font-weight: bold;
+  color: black;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.input input {
+  max-width: 45px;
+  text-align: center;
+}
+.input div:first-child {
+  margin: 0px 5px;
+}
+.input div:last-child {
+  margin: 0px 5px;
+}
+
 .submit {
   margin-top: 25px;
   text-align: center;
 }
 
+.placeinput {
+  color: black;
+  width: 95vw;
+  margin: 7px 10px 10px 10px;
+  padding: 7px 10px 10px 10px;
+}
+
+.restaurants-container {
+  margin: 50px 0px;
+  
+}
+
+.rest {
+  position: relative;
+  width: 90vw;
+  height: 120px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin: 20px auto;
+}
+
+.rest div {
+  position: absolute;
+  
+}
+
+.rest-name {
+  top: 10px;
+  left: 10px;
+}
+.rest-name a, .rest-name a:hover, .rest-name a:visited {
+  color: #c41200;
+  text-decoration: none;
+}
+
+.rest-open {
+  top: 33px;
+  left: 10px;
+  color: #2f8e2f;
+}
+.rest-closed {
+  color: #c41200;
+}
+
+.rest-rating {
+  top: 80px;
+  left: 10px;
+}
+
+.rest-image {
+  top: 10px;
+  right: 10px;
+}
+
+.rest-categories {
+  top: 58px;
+  left: 10px;
+}
+
+.rest-select {
+  bottom: 10px;
+  left: 30%;
+  height: 30px;
+  width: 30%;
+  border-radius: 5px;
+  background-color: #3b65a7;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#map {
+  width: 100vw;
+  height: 60vh;
+}
+#panel {
+  width: 100vw;
+  height: 40vh;
+  overflow-y: scroll;
+}
