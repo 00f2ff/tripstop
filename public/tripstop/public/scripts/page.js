@@ -2,6 +2,13 @@
 /* I would also want to search for more restaurants, so code in an offset at some point */
 /* A smarter version would remove convenience stores and gas stations from results and then query for more (or just query for a lot then remove results) */
 /* also add more touch events (directions vs map resizing, etc) */
+/* Updated algorithm: I decided that I'm just going to assume an average mph of 65 since I don't think it's possible to get
+reliable data from a source other than the Roads API which is only for businesses. This means that the more time a user spends
+on a single road, the less accurate our suggestion will be. I'm going with 65mph because I don't know if users will be on
+freeways or rural roads, which range from 75-55 mph usually (according to wikipedia)
+https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
+*/
+
   $(function() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -63,23 +70,42 @@
     }
 
     function findStopStep(steps) {
-      var time = parseInt($('input[name="hours"]').val(),10) * 60 * 60; // conversion to step duration value (seconds)
-      var index = 0;
+      var time = parseInt($('input[name="hours"]').val(),10) * 3600, // conversion to step duration value (seconds)
+          index = 0,
+          step_proportion,
+          ll_index,
+          ll;
       // this loop stops when it finds the step at which the user wants to stop, or there are no more steps (reached destination)
       while (time > 0 && index < steps.length) {
         time -= steps[index].duration.value;
         index++;
       }
       index -= 1; // go back to step that took time below 0 (so farther along than we want)
+      // estimate lat_lng coordinate based on avg freeway/rural speed of 65mph
+      if (time < 0) {
+        // recall that time is in seconds; needs to be converted to hours
+        step_proportion = ((steps[index].duration.value - Math.abs(time)) / 3600.0 * 65 * 1609.34) / steps[index].distance.value;
+        ll_index = Math.ceil(step_proportion * steps[index].lat_lngs.length);
+        ll = steps[index].lat_lngs[ll_index].toString(); // (...,...)
+        ll = ll.substring(1,ll.length-2).replace(' ',''); // remove parentheses
+      } else if (time == 0) {
+        ll = steps[index].end_location.lat() + ',' + steps[index].end_location.lng();
+      }
+
       // find yelp data
       var radius_filter = parseInt($('input[name="radius"]').val(),10) * 1609.34; // convert to meters
-      var ll = steps[index].end_location.lat() + ',' + steps[index].end_location.lng();
+      
+      /* My code isn't incorrect (based on double checking with normal google maps). For some reason, Yelp is returning
+       * incorrect results (way farther away than the coordinate I'm sending) */
+
 
       $.ajax({
         url: '/stop/'+ll+'/'+radius_filter,
         type: "GET",
         success: function(result) {
           // call external function on results
+          console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
+          console.log(result);
           listRestaurants(result);
         },
         error: function(jqXHR, textStatus, errorThrown) {
