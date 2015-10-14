@@ -9,9 +9,12 @@ freeways or rural roads, which range from 75-55 mph usually (according to wikipe
 https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
 */
 
+
+
   $(function() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
+    var stoppingPoint;
 
     var map = new google.maps.Map(document.getElementById('map'), {
      zoom:7,
@@ -26,6 +29,9 @@ https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
       // append listings to page
       for (var i = 0; i < businesses.length; i++) {
         var b = businesses[i];
+        var lat = b.location.coordinate.latitude,
+            lng = b.location.coordinate.longitude;
+        var ll = new google.maps.LatLng(lat,lng);
         var closed_class, closed_message;
         if (b.is_closed) {
           closed_class = 'rest-closed';
@@ -40,14 +46,32 @@ https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
           return !(index % 2);
         }).slice(0,2).join(', '); // trim down
 
-        var listing = '<div class="rest">\
-                        <div class="rest-name"><a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a></div><div class="'+closed_class+'">'+closed_message+'</div>\
+        var request = { // this is a crappy way to code it (maybe)
+          origin: stoppingPoint, 
+          destination: ll,
+          travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+        var distance;
+        directionsService.route(request, function(response, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            distance = response.routes[0].legs[0].distance.text;
+            // since this will finish processing after listing is appended to page, identify location and add
+            $('#rest-'+b.id).find('.rest-distance').text(distance);
+          }
+        });
+        var listing = '<div class="rest" id="rest-'+b.id+'">\
+                        <div class="rest-name">\
+                          <a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a>\
+                          <span class="rest-distance"></span>\
+                          </div>\
+                        <div class="'+closed_class+'">'+closed_message+'</div>\
                         <div class="rest-rating"><img src="'+b.rating_img_url_small+'"/></div>\
                         <div class="rest-image"><img src="'+b.image_url+'" /></div>\
                         <div class="rest-categories">'+categories+'</div>\
                         <div class="rest-select" id="'+b.id+'">Select</div>\
                       </div>';
         $('.restaurants-container').append(listing);
+        
       }
       // apply click handler that sends mapping information
       $('.rest-select').click(function() {
@@ -60,10 +84,10 @@ https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
                 lng = businesses[i].location.coordinate.longitude;
             var ll = new google.maps.LatLng(lat,lng);
             var waypoint = [{location: ll, stopover: true}];
-            console.log(waypoint);
+            // console.log(waypoint);
             var destination = $('input[name="destination"]').val();
             makeRequest(origin, waypoint, destination, true); // show maps and directions now
-            console.log(businesses[i]);
+            // console.log(businesses[i]);
           }
         }
       })
@@ -92,20 +116,18 @@ https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
         ll = steps[index].end_location.lat() + ',' + steps[index].end_location.lng();
       }
 
+      stoppingPoint = ll;
+
       // find yelp data
       var radius_filter = parseInt($('input[name="radius"]').val(),10) * 1609.34; // convert to meters
-      
-      /* My code isn't incorrect (based on double checking with normal google maps). For some reason, Yelp is returning
-       * incorrect results (way farther away than the coordinate I'm sending) */
-
-
+    
       $.ajax({
         url: '/stop/'+ll+'/'+radius_filter,
         type: "GET",
         success: function(result) {
           // call external function on results
-          console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
-          console.log(result);
+          // console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
+          // console.log(result);
           listRestaurants(result);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -113,6 +135,22 @@ https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
         }
       });
     }
+
+    // refactor this later
+    // function findDistanceAway(restaurantLocation) {
+    //   var request = {
+    //     origin: stoppingPoint, 
+    //     destination: restaurantLocation,
+    //     travelMode: google.maps.DirectionsTravelMode.DRIVING
+    //   };
+    //   directionsService.route(request, function(response, status) {
+    //     if (status == google.maps.DirectionsStatus.OK) {
+    //       return response.routes[0].legs[0].distance.text;
+    //     }
+    //   });
+
+    // }
+
 
     function makeRequest(origin, waypoints, destination, finalRoute) {
       var request = {
