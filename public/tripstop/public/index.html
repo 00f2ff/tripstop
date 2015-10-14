@@ -15,8 +15,8 @@
 
     <form>
       <div class="placeinput">
-        <input type="text" name="origin" placeholder="From" class="place" />
-        <input type="text" name="destination" placeholder="To" class="place" />
+        <input type="text" id="origin-input" name="origin" placeholder="From" class="place" />
+        <input type="text" id="destination-input" name="destination" placeholder="To" class="place" />
       </div>
       <div class="input hours-input">
         <div>Stop to eat</div>
@@ -38,7 +38,7 @@
         <div>miles</div>
       </div>
       <div class="submit">
-        <button type="button" id="find-restaurants" class="btn btn-default">Find Restaurants</button>
+        <button type="button" id="find-restaurants" class="btn btn-default">Find Highest Rated Restaurants</button>
       </div>
     </form>
     <!-- <div id="bg">
@@ -59,7 +59,7 @@
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <!-- < script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&signed_in=false"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&libraries=places"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
   <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
   <script src="./scripts/page.js"></script> 
 

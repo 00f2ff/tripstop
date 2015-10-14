@@ -9,8 +9,6 @@ freeways or rural roads, which range from 75-55 mph usually (according to wikipe
 https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
 */
 
-
-
   $(function() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -23,6 +21,14 @@ https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
 
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('panel'));
+
+    var originInput = (document.getElementById('origin-input'));
+    var destinationInput = (document.getElementById('destination-input'));
+    // bind autocomplete controls
+    var autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
+    autocompleteOrigin.bindTo('bounds', map);
+    var autocompleteDestination = new google.maps.places.Autocomplete(destinationInput);
+    autocompleteDestination.bindTo('bounds', map);
 
     function listRestaurants(result) {
       businesses = JSON.parse(result).businesses;
