@@ -2,12 +2,7 @@
 /* I would also want to search for more restaurants, so code in an offset at some point */
 /* A smarter version would remove convenience stores and gas stations from results and then query for more (or just query for a lot then remove results) */
 /* also add more touch events (directions vs map resizing, etc) */
-/* Updated algorithm: I decided that I'm just going to assume an average mph of 65 since I don't think it's possible to get
-reliable data from a source other than the Roads API which is only for businesses. This means that the more time a user spends
-on a single road, the less accurate our suggestion will be. I'm going with 65mph because I don't know if users will be on
-freeways or rural roads, which range from 75-55 mph usually (according to wikipedia)
-https://en.wikipedia.org/wiki/Speed_limits_in_the_United_States
-*/
+
 
   $(function() {
     var directionsService = new google.maps.DirectionsService();
