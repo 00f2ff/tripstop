@@ -36,11 +36,9 @@
           return (index % 2);
         });
         // mark restaurant if a category is in blacklist
-        console.log(categories);
         for (var c = 0; c < categories.length; c++) {
           if (blacklist.indexOf(categories[c]) > -1) {
             is_blacklisted = true;
-            console.log('hi')
           }
         }
         if (!is_blacklisted) remaining.push(b);
@@ -158,7 +156,6 @@
           // call external function on results
           // console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
           // console.log(result);
-          console.log(result);
           listRestaurants(result);
         },
         error: function(jqXHR, textStatus, errorThrown) {

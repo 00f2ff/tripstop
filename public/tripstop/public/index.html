@@ -17,6 +17,7 @@
   </div>
 
   <!-- homepage -->
+  <div class = "first page">
   <div class="form-container">
     <form>
       <div class="placeinput">
@@ -43,32 +44,104 @@
         <div>miles</div>
       </div>
       <div class="submit">
-        <button type="button" id="find-restaurants" class="btn btn-default" class = "find-restaurants-right">Find Highest Rated Restaurants</button>
+        <button type="button" id="find-restaurants" class="btn btn-default find-restaurants-right">Find Highest Rated Restaurants</button>
       </div>
     </form>
     <!-- <div id="bg">
         <img src="/index.jpg" alt="">
     </div> -->
   </div>
+</div>
+
 
   <!-- restaurants page -->
-  <div class="restaurants-container">
-    
+  <div class = "second page">
+    <div class="restaurants-container"> 
+    </div>
   </div>
 
+
   <!-- directions page -->
+  <div class = "third page">
   <div class="directions-container">
      <div id="map"></div> 
      <div id="panel"></div> 
    </div>
   <div class="footer">
   </div>
+  </div>
+
+
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <!-- < script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlR9ma0edIWp_C0I3LRpDCBLXzqmRfEjw&libraries=places"></script> <!-- I shouldn't stick the API key here like this; probably generate this as an async defer using code in the head -->
   <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
   <script src="./scripts/page.js"></script> 
+
+
+<script>
+$(function() {
+
+  // function moveToLeft()
+
+  $('.first .find-restaurants-right').click(function() {
+    $('.first').animate({
+      left: '-100vw'
+    }, 1000);
+    // $('.second').animate({
+    //   left: '0vw'
+    // }, 1000);
+    // $('.third').animate({
+    //   left: '100vw'
+    // }, 1000);
+  });
+
+  $(document).on('click', '.rest-select', function() {
+    $('.second .rest-select').click(function() {
+      $('.second').animate({
+        left: '-100vw'
+      }, 1000);
+    //   $('.right-box').animate({
+    //     left: '0vw'
+    //   }, 1000);
+    })
+  });
+
+  $('.third .left').click(function() {
+    $('.third').animate({
+      left: '0vw'
+    }, 1000);
+  //   $('.middle-box').animate({
+  //     left: '100vw'
+  //   }, 1000);
+  //   $('.right-box').animate({
+  //     left: '200vw'
+  //   }, 1000);
+  });
+
+  // $('.right-box .left').click(function() {
+  //   $('.middle-box').animate({
+  //     left: '0vw'
+  //   }, 1000);
+  //   $('.right-box').animate({
+  //     left: '100vw'
+  //   }, 1000);
+  // });
+
+  // $('.right-box .first').click(function() {
+  //   $('.left-box').animate({
+  //     left: '0vw'
+  //   }, 1000);
+  //   $('.middle-box').animate({
+  //     left: '100vw'
+  //   }, 1000);
+  //   $('.right-box').animate({
+  //     left: '200vw'
+  //   }, 1000);
+  // });
+})
+</script>
 
 </body>
 
