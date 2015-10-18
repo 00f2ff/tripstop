@@ -25,8 +25,32 @@
     var autocompleteDestination = new google.maps.places.Autocomplete(destinationInput);
     autocompleteDestination.bindTo('bounds', map);
 
+    function removeUndesirableRestaurants(businesses) { // this is so space-inefficient
+      var remaining = [];
+      var blacklist = ['convenience', 'hotdogs']; // hotdogs is yelp code for fast food
+      for (var i = 0; i < businesses.length; i++) {
+        var is_blacklisted = false;
+        var b = businesses[i];
+        var categories = [].concat.apply([], b.categories);
+        categories = categories.filter(function(el, index) {
+          return (index % 2);
+        });
+        // mark restaurant if a category is in blacklist
+        console.log(categories);
+        for (var c = 0; c < categories.length; c++) {
+          if (blacklist.indexOf(categories[c]) > -1) {
+            is_blacklisted = true;
+            console.log('hi')
+          }
+        }
+        if (!is_blacklisted) remaining.push(b);
+      }
+      return remaining;
+    }
+
     function listRestaurants(result) {
-      businesses = JSON.parse(result).businesses;
+      // remove fast food and convenience stores
+      var businesses = removeUndesirableRestaurants(JSON.parse(result).businesses);
       // append listings to page
       for (var i = 0; i < businesses.length; i++) {
         var b = businesses[i];
@@ -46,6 +70,9 @@
         categories = categories.filter(function(el, index) {
           return !(index % 2);
         }).slice(0,2).join(', '); // trim down
+
+        // remove undesirable categories
+
 
         var request = { // this is a crappy way to code it (maybe)
           origin: stoppingPoint, 
@@ -115,20 +142,23 @@
         ll = ll.substring(1,ll.length-2).replace(' ',''); // remove parentheses
       } else if (time == 0) {
         ll = steps[index].end_location.lat() + ',' + steps[index].end_location.lng();
+      } else {
+        ll_index = steps[index].lat_lngs.length -1; // last coord of last step
+        ll = steps[index].lat_lngs[ll_index].toString(); // (...,...)
+        ll = ll.substring(1,ll.length-2).replace(' ',''); // remove parentheses
       }
-
       stoppingPoint = ll;
 
       // find yelp data
       var radius_filter = parseInt($('input[name="radius"]').val(),10) * 1609.34; // convert to meters
-    
       $.ajax({
-        url: '/stop/'+ll+'/'+radius_filter,
+        url: '/stop/'+stoppingPoint+'/'+radius_filter,
         type: "GET",
         success: function(result) {
           // call external function on results
           // console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
           // console.log(result);
+          console.log(result);
           listRestaurants(result);
         },
         error: function(jqXHR, textStatus, errorThrown) {
