@@ -36,11 +36,9 @@
           return (index % 2);
         });
         // mark restaurant if a category is in blacklist
-        console.log(categories);
         for (var c = 0; c < categories.length; c++) {
           if (blacklist.indexOf(categories[c]) > -1) {
             is_blacklisted = true;
-            console.log('hi')
           }
         }
         if (!is_blacklisted) remaining.push(b);
@@ -87,6 +85,7 @@
             $('#rest-'+b.id).find('.rest-distance').text(distance);
           }
         });
+        console.log(distance);
         var listing = '<div class="rest" id="rest-'+b.id+'">\
                         <div class="rest-name">\
                           <a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a>\
@@ -105,15 +104,16 @@
       $('.rest-select').click(function() {
         // loop through businesses searching for id
         for (var i = 0; i < businesses.length; i++) {
+          var origin, lat, lng, ll, waypoint, destination;
           if (businesses[i].id == $(this).attr('id')) {
             // if user changed these, then too bad (at least for demo version)
-            var origin = $('input[name="origin"]').val();
-            var lat = businesses[i].location.coordinate.latitude,
-                lng = businesses[i].location.coordinate.longitude;
-            var ll = new google.maps.LatLng(lat,lng);
-            var waypoint = [{location: ll, stopover: true}];
+            origin = $('input[name="origin"]').val();
+            lat = businesses[i].location.coordinate.latitude,
+            lng = businesses[i].location.coordinate.longitude;
+            ll = new google.maps.LatLng(lat,lng);
+            waypoint = [{location: ll, stopover: true}];
             // console.log(waypoint);
-            var destination = $('input[name="destination"]').val();
+            destination = $('input[name="destination"]').val();
             makeRequest(origin, waypoint, destination, true); // show maps and directions now
             // console.log(businesses[i]);
           }
@@ -124,9 +124,7 @@
     function findStopStep(steps) {
       var time = parseInt($('input[name="hours"]').val(),10) * 3600, // conversion to step duration value (seconds)
           index = 0,
-          step_proportion,
-          ll_index,
-          ll;
+          step_proportion, ll_index, ll;
       // this loop stops when it finds the step at which the user wants to stop, or there are no more steps (reached destination)
       while (time > 0 && index < steps.length) {
         time -= steps[index].duration.value;
@@ -158,7 +156,6 @@
           // call external function on results
           // console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
           // console.log(result);
-          console.log(result);
           listRestaurants(result);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -233,7 +230,6 @@
           destination = $('input[name="destination"]').val();
       // generate map
       makeRequest(origin, [], destination, false); // no waypoints, not final route
-      // makeRequest('washington dc',[],'pittsburgh pa', false); 
       // ev.preventDefault();
     })
     
