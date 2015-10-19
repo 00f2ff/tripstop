@@ -138,6 +138,7 @@ html, body {
 .rest-categories {
   top: 58px;
   left: 10px;
+  width: 250px;
 }
 
 .rest-select {

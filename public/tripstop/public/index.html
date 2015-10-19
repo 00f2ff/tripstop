@@ -89,12 +89,12 @@ $(function() {
     $('.first').animate({
       left: '-100vw'
     }, 1000);
-    // $('.second').animate({
-    //   left: '0vw'
-    // }, 1000);
-    // $('.third').animate({
-    //   left: '100vw'
-    // }, 1000);
+    $('.second').animate({
+      left: '0vw'
+    }, 1000);
+    $('.third').animate({
+      left: '100vw'
+    }, 1000);
   });
 
   $(document).on('click', '.rest-select', function() {
@@ -102,23 +102,25 @@ $(function() {
       $('.second').animate({
         left: '-100vw'
       }, 1000);
-    //   $('.right-box').animate({
-    //     left: '0vw'
-    //   }, 1000);
+      $('.third').animate({
+        left: '0vw'
+      }, 1000);
     })
   });
 
-  $('.third .left').click(function() {
-    $('.third').animate({
-      left: '0vw'
-    }, 1000);
-  //   $('.middle-box').animate({
-  //     left: '100vw'
-  //   }, 1000);
-  //   $('.right-box').animate({
-  //     left: '200vw'
-  //   }, 1000);
-  });
+  $(document).on('click', '.rest-select', function() {
+    $('.second .rest-select').click(function() {
+      $('.first').animate({
+        left: '0vw'
+      }, 1000);
+      $('.second').animate({
+        left: '100vw'
+      }, 1000);
+      $('.third').animate({
+        left: '200vw'
+      }, 1000);
+      })
+    });
 
   // $('.right-box .left').click(function() {
   //   $('.middle-box').animate({
