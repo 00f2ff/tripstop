@@ -138,6 +138,7 @@ html, body {
 .rest-categories {
   top: 58px;
   left: 10px;
+  width: 250px;
 }
 
 .rest-select {
@@ -166,4 +167,22 @@ html, body {
   width: 100vw;
   height: 40vh;
   overflow-y: scroll;
+}
+
+.page {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+}
+
+.first{
+  left: 0;
+}
+
+.second{
+  left: 100vw;
+}
+
+.third{
+  left: 200vw;
 }
