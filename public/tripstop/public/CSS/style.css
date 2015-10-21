@@ -133,6 +133,8 @@ html, body {
   text-decoration: none;
 }
 
+.rest-distance { color: black; }
+
 .rest-open {
   top: 33px;
   left: 10px;

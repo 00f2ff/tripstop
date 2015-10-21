@@ -69,7 +69,7 @@
         var categories = [].concat.apply([], b.categories);
         categories = categories.filter(function(el, index) {
           return !(index % 2);
-        }).slice(0,2).join(', '); // trim down
+        }).slice(0,1).join(', '); // trim down (this isn't particularly helpful, but does fix UI issues)
 
         var request = { // this is a crappy way to code it (maybe)
           origin: stoppingPoint, 
@@ -81,16 +81,15 @@
           if (status == google.maps.DirectionsStatus.OK) {
             distance = response.routes[0].legs[0].distance.text;
             // since this will finish processing after listing is appended to page, identify location and add
-            $('#rest-'+b.id).find('.rest-distance').text(distance);
+            $('#rest-'+b.id).find('.rest-distance').text('('+distance+' from stop)');
           }
         });
         console.log(distance);
         var listing = '<div class="rest" id="rest-'+b.id+'">\
                         <div class="rest-name">\
                           <a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a>\
-                          <span class="rest-distance"></span>\
-                          </div>\
-                        <div class="'+closed_class+'">'+closed_message+'</div>\
+                        </div>\
+                        <div class="'+closed_class+'">'+closed_message+'&nbsp;&nbsp;&nbsp;<span class="rest-distance"></span></div>\
                         <div class="rest-rating"><img src="'+b.rating_img_url_small+'"/></div>\
                         <div class="rest-image"><img src="'+b.image_url+'" /></div>\
                         <div class="rest-categories">'+categories+'</div>\
