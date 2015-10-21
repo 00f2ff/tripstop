@@ -24,7 +24,7 @@ var yelp = {
   /* We can setup default parameters here */
   var default_parameters = {
     sort: '2', // highest rated
-    limit: '20' 
+    limit: '12' // not 20 because I think I run into a Google Directions API request frequency cap
   };
 
   /* We set the require parameters here */

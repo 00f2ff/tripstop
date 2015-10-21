@@ -1,6 +1,4 @@
 /* in future i'd want to let people choose between tolls, ferries, etc, choose alternate routes, etc */
-/* I would also want to search for more restaurants, so code in an offset at some point */
-/* A smarter version would remove convenience stores and gas stations from results and then query for more (or just query for a lot then remove results) */
 /* also add more touch events (directions vs map resizing, etc) */
 
 
@@ -76,15 +74,6 @@
           destination: ll,
           travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
-        var distance;
-        directionsService.route(request, function(response, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
-            distance = response.routes[0].legs[0].distance.text;
-            // since this will finish processing after listing is appended to page, identify location and add
-            $('#rest-'+b.id).find('.rest-distance').text('('+distance+' from stop)');
-          }
-        });
-        console.log(distance);
         var listing = '<div class="rest" id="rest-'+b.id+'">\
                         <div class="rest-name">\
                           <a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a>\
@@ -96,7 +85,36 @@
                         <div class="rest-select" id="'+b.id+'">Select</div>\
                       </div>';
         $('.restaurants-container').append(listing); 
+        findDistanceAway(request, b.id);
+        // console.log(distance);
       }
+    }
+
+    function findDistanceAway(request, businessId) {
+      directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          var distance = response.routes[0].legs[0].distance.text;
+          // var rest = $('.restaurants-container').first();
+          // var count = 0;
+          // while (count < businesses.length && !rest.find('.rest-distance').text()) {
+          //   console.log(rest);
+          //   rest = rest.next();
+          //   count++;
+          // }
+          // console.log('#############')
+          // rest.find('.rest-distance').text('('+distance+' from stop)');
+          // since each request will finish after all restaurants have been appended, search through them and
+          // write distance for each that doesn't have a distance already
+          // for (var r = 0; r < $('.rest').length; r++) {
+          //   if (!$($('.rest')[r]).find('.rest-distance').text()) {
+          //     $($('.rest')[r]).find('.rest-distance').text('('+distance+' from stop)');
+          //     break;
+          //   }
+          // }
+          $('#rest-'+businessId).find('.rest-distance').text('('+distance+' from stop)');
+          console.log($('#rest-'+businessId),distance);
+        }
+      });
     }
 
     function findStopStep(steps) {
