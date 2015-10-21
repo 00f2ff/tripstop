@@ -1,16 +1,16 @@
 #bg {
   position: absolute;
   background: url(http://4.bp.blogspot.com/_ZmCuIZbFJ10/TLatRXPS9nI/AAAAAAAAAXw/oyUDi-btfLc/s1600/Southwest+Desert+Road.jpg);
-        background-size: cover;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        height: 100%;
-        width: 100%;
-        
-        background-position: center center;
-        background-repeat: no-repeat;
-        opacity: .3;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  height: 100%;
+  width: 100%;
+  
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: .3;
 }
 #bg img {
         
@@ -24,11 +24,11 @@ html, body {
 }
 
 .header {
-  height: 40px;
+  height: 5vh;
+  line-height: 5vh;
   background-color: #474747;
   color: white;
   padding-left: 10px;
-  padding-top: 10px;
   cursor: pointer;
 }
 .header img {
@@ -45,14 +45,23 @@ html, body {
   padding-top: 15px;
 }
 
+.placeinput input, .submit button {
+  margin: 0 auto;
+  max-width: 90vw;
+}
 
 .input {
-  /*margin: 5px auto;*/
-  text-align: center;
+  margin: -10px auto;
+  /*text-align: center;*/
+  width: 90vw;
 }
 .input div {
   display: inline-block;
 }
+.input .left-text {
+  width: 20vw;
+}
+
 .input .pm-symbol {
   /*padding: 10px 10px;*/
   padding: 0;
@@ -75,6 +84,7 @@ html, body {
 .input input {
   max-width: 45px;
   text-align: center;
+  /*margin: 0 auto;*/
 }
 .input div:first-child {
   margin: 0px 5px;
@@ -167,13 +177,14 @@ html, body {
 }
 
 #map {
-  width: 100vw;
+  width: 100%;
   height: 60vh;
 }
 #panel {
-  width: 100vw;
-  height: 40vh;
+  width: 100%;
+  height: 35vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .page {

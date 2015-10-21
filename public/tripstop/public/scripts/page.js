@@ -260,6 +260,8 @@
       $('.first').animate({
         left: '0vw'
       }, transitionSpeed);
+      // empty restaurants
+      $('.restaurants-container').empty();
     });
 
     /**
