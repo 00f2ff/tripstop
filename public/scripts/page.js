@@ -80,9 +80,11 @@
                         </div>\
                         <div class="'+closed_class+'">'+closed_message+'&nbsp;&nbsp;&nbsp;<span class="rest-distance"></span></div>\
                         <div class="rest-rating"><img src="'+b.rating_img_url_small+'"/></div>\
-                        <div class="rest-image"><img src="'+b.image_url+'" /></div>\
+                        <div class="rest-image">\
+                          <img src="'+b.image_url+'" />\
+                          <div class="image-overlay" id="'+b.id+'"><div>Select</div></div>\
+                        </div>\
                         <div class="rest-categories">'+categories+'</div>\
-                        <div class="rest-select" id="'+b.id+'">Select</div>\
                       </div>';
         $('.restaurants-container').append(listing); 
         findDistanceAway(request, b.id);
@@ -154,7 +156,7 @@
           console.log(textStatus, errorThrown);
           // if (jqXHR.status === 408 || jqXHR.status === 504) {
           // This isn't a great way to handle all errors, but I've only found timeouts to exist
-          alert("Sorry, but this request timed out. Please try again or choose a different radius.");
+          alert("Sorry, but this request timed out. Please try again or choose a larger radius.");
           // }
         }
       });
@@ -239,7 +241,7 @@
      * First searches for the business object this button corresponds with and identifies the route and loads the map.
      * Triggers transition to that page (not as a callback to map request, for now
       */
-    $(document).on('click', '.rest-select', function() {
+    $(document).on('click', '.image-overlay', function() {
       // loop through businesses searching for id
       for (var i = 0; i < businesses.length; i++) {
         var origin, lat, lng, ll, waypoint, destination;
