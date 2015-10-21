@@ -17,6 +17,7 @@
 }
 
 html, body {
+  font-family: 'Helvetica Neue';
   height: 100%;
   margin: 0;
   padding: 0;
@@ -28,7 +29,13 @@ html, body {
   color: white;
   padding-left: 10px;
   padding-top: 10px;
+  cursor: pointer;
 }
+.header img {
+  height: 20px;
+  width: 20px;
+}
+
 .place {
   margin: 10px 10px 10px 10px;
   padding: 10px 10px 10px 10px;
