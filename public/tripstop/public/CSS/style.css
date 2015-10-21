@@ -1,20 +1,3 @@
-#bg {
-  position: absolute;
-  background: url(http://4.bp.blogspot.com/_ZmCuIZbFJ10/TLatRXPS9nI/AAAAAAAAAXw/oyUDi-btfLc/s1600/Southwest+Desert+Road.jpg);
-        background-size: cover;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        height: 100%;
-        width: 100%;
-        
-        background-position: center center;
-        background-repeat: no-repeat;
-        opacity: .3;
-}
-#bg img {
-        
-}
 
 html, body {
   height: 100%;
@@ -23,12 +6,21 @@ html, body {
 }
 
 .header {
+  text-align: center;
   height: 40px;
-  background-color: #474747;
+  background-color: #3333FF;
   color: white;
   padding-left: 10px;
   padding-top: 10px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 17pt;
 }
+
+#header2{
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-style: italic;
+}
+
 .place {
   margin: 10px 10px 10px 10px;
   padding: 10px 10px 10px 10px;
@@ -185,4 +177,8 @@ html, body {
 
 .third{
   left: 200vw;
+}
+
+.page{
+  background-color: #99CCFF;
 }
