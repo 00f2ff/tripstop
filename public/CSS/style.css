@@ -107,7 +107,7 @@ html, body {
 
 .restaurants-container {
   margin: 50px 0px;
-  
+  overflow-y: scroll; /* doesn't make a huge difference */
 }
 
 .rest {
