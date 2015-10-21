@@ -226,6 +226,27 @@
     });
     // ------   End hardcoded buttons
 
+    // This doesn't work and takes too long to process. I removed the corresponding HTML tag
+    // Geolocation code modified from Google documentation
+    // $('#geo').click(function() {
+    //   if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(function(position) {
+    //       var pos = {
+    //         lat: position.coords.latitude,
+    //         lng: position.coords.longitude
+    //       };
+    //       console.log(pos);
+    //       var geocoder = new google.maps.Geocoder;
+    //       geocoder.geocode({'location':pos, function(results, status) {
+    //           if (status === google.maps.GeocoderStatus.OK) {
+    //             if (results[1]) $('input[name="origin"]').val(results[1].formatted_address);
+    //           }
+    //         }
+    //       });          
+    //     });
+    //   }
+    // });
+
     $('button#find-restaurants').click(function(ev) {
       // empty existing restaurants
       $('.restaurants-container').empty();
