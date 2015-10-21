@@ -6,14 +6,34 @@ html, body {
 }
 
 .header {
-  text-align: center;
   height: 40px;
-  background-color: #3333FF;
+  background-color: #3b9ba7;
   color: white;
   padding-left: 10px;
   padding-top: 10px;
-  font-family: "Arial Black", Gadget, sans-serif;
+  padding-bottom: 40px;
+  font-family: "Arial", Gadget, sans-serif;
+  font-size: 15pt;
+}
+
+.header2 {
+  height: 40px;
+  background-color: #3b9ba7;
+  color: white;
+  padding-left: 23px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  font-family: "Droid Sans", sans-serif;
   font-size: 17pt;
+  font-style: bold;
+}
+
+#find-restaurants {
+  background-color: #3b65a7;
+  color: white;
+  font-family: "Droid Sans", sans-serif;
+  font-size: 12pt;
+  font-style: normal;
 }
 
 .place {
@@ -50,10 +70,10 @@ html, body {
   width: 30px;
   border-radius: 30px;
   line-height: 30px;
-  background-color: gray;
+  background-color: #89a2ca;
   text-align: center;
   font-weight: bold;
-  color: black;
+  color: white;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -61,16 +81,30 @@ html, body {
   -ms-user-select: none;
   user-select: none;
 }
-.input input {
-  max-width: 45px;
-  text-align: center;
-  /*margin: 0 auto;*/
-}
+
 .input div:first-child {
   margin: 0px 5px;
 }
 .input div:last-child {
   margin: 0px 5px;
+}
+
+.input input {
+  max-width: 45px;
+  text-align: center;
+}
+
+.hours-input {
+  margin-bottom: 10px;
+}
+
+.radius-input {
+  margin-bottom: 10px;
+}
+
+.ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset {
+  margin-top: 200px;
+  padding-top: 200px;
 }
 
 .submit {
@@ -87,15 +121,16 @@ html, body {
 
 .restaurants-container {
   margin: 50px 0px;
-  
+  background-color: #d7e0ed;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 15px;
 }
 
 .rest {
   position: relative;
   width: 90vw;
   height: 120px;
-  border-radius: 5px;
-  border: 1px solid gray;
   margin: 20px auto;
 }
 
@@ -188,5 +223,11 @@ html, body {
 }
 
 .page{
-  background-color: #99CCFF;
+  background-color: white;
+}
+
+.footer{
+  border-bottom-style: solid;
+  border-bottom-width: 40px;
+  border-bottom-color: #3b9ba7;
 }
