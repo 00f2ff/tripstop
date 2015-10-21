@@ -94,25 +94,7 @@
       directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           var distance = response.routes[0].legs[0].distance.text;
-          // var rest = $('.restaurants-container').first();
-          // var count = 0;
-          // while (count < businesses.length && !rest.find('.rest-distance').text()) {
-          //   console.log(rest);
-          //   rest = rest.next();
-          //   count++;
-          // }
-          // console.log('#############')
-          // rest.find('.rest-distance').text('('+distance+' from stop)');
-          // since each request will finish after all restaurants have been appended, search through them and
-          // write distance for each that doesn't have a distance already
-          // for (var r = 0; r < $('.rest').length; r++) {
-          //   if (!$($('.rest')[r]).find('.rest-distance').text()) {
-          //     $($('.rest')[r]).find('.rest-distance').text('('+distance+' from stop)');
-          //     break;
-          //   }
-          // }
           $('#rest-'+businessId).find('.rest-distance').text('('+distance+' from stop)');
-          console.log($('#rest-'+businessId),distance);
         }
       });
     }
@@ -127,10 +109,10 @@
         index++;
       }
       index -= 1; // go back to step that took time below 0 (so farther along than we want)
-      // estimate lat_lng coordinate based on avg freeway/rural speed of 65mph
       if (time < 0) {
-        // recall that time is in seconds; needs to be converted to hours
-        step_proportion = ((steps[index].duration.value - Math.abs(time)) / 3600.0 * 65 * 1609.34) / steps[index].distance.value;
+        // My previous equation far-overcomplicated this problem. This proportion implicitly includes speed limit since 
+        // Google Maps time accounts for speed and distance. This is far more accurate than previously.
+        step_proportion = (steps[index].duration.value - Math.abs(time)) / steps[index].duration.value;
         ll_index = Math.ceil(step_proportion * steps[index].lat_lngs.length);
         ll = steps[index].lat_lngs[ll_index].toString(); // (...,...)
         ll = ll.substring(1,ll.length-2).replace(' ',''); // remove parentheses
@@ -148,6 +130,13 @@
       $.ajax({
         url: '/stop/'+stoppingPoint+'/'+radius_filter,
         type: "GET",
+        timeout: 7000,
+        beforeSend: function() {
+          $('.spinner').css('visibility','visible');
+        },
+        complete: function() {
+          $('.spinner').css('visibility','hidden');
+        },
         success: function(result) {
           listRestaurants(result);
           // animate after restaurants are listed (** add spinner?)
@@ -163,25 +152,13 @@
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus, errorThrown);
+          // if (jqXHR.status === 408 || jqXHR.status === 504) {
+          // This isn't a great way to handle all errors, but I've only found timeouts to exist
+          alert("Sorry, but this request timed out. Please try again or choose a different radius.");
+          // }
         }
       });
     }
-
-    // refactor this later
-    // function findDistanceAway(restaurantLocation) {
-    //   var request = {
-    //     origin: stoppingPoint, 
-    //     destination: restaurantLocation,
-    //     travelMode: google.maps.DirectionsTravelMode.DRIVING
-    //   };
-    //   directionsService.route(request, function(response, status) {
-    //     if (status == google.maps.DirectionsStatus.OK) {
-    //       return response.routes[0].legs[0].distance.text;
-    //     }
-    //   });
-
-    // }
-
 
     function makeRequest(origin, waypoints, destination, finalRoute) {
       var request = {
@@ -298,8 +275,6 @@
       $('.first').animate({
         left: '0vw'
       }, transitionSpeed);
-      // empty restaurants
-      $('.restaurants-container').empty();
     });
 
     /**
