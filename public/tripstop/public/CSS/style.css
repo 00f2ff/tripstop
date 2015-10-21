@@ -1,5 +1,5 @@
-
 html, body {
+  font-family: 'Helvetica Neue';
   height: 100%;
   margin: 0;
   padding: 0;
@@ -16,11 +16,6 @@ html, body {
   font-size: 17pt;
 }
 
-#header2{
-  font-family: "Arial Black", Gadget, sans-serif;
-  font-style: italic;
-}
-
 .place {
   margin: 10px 10px 10px 10px;
   padding: 10px 10px 10px 10px;
@@ -30,14 +25,23 @@ html, body {
   padding-top: 15px;
 }
 
+.placeinput input, .submit button {
+  margin: 0 auto;
+  max-width: 90vw;
+}
 
 .input {
-  /*margin: 5px auto;*/
-  text-align: center;
+  margin: -10px auto;
+  /*text-align: center;*/
+  width: 90vw;
 }
 .input div {
   display: inline-block;
 }
+.input .left-text {
+  width: 20vw;
+}
+
 .input .pm-symbol {
   /*padding: 10px 10px;*/
   padding: 0;
@@ -60,6 +64,7 @@ html, body {
 .input input {
   max-width: 45px;
   text-align: center;
+  /*margin: 0 auto;*/
 }
 .input div:first-child {
   margin: 0px 5px;
@@ -108,6 +113,8 @@ html, body {
   text-decoration: none;
 }
 
+.rest-distance { color: black; }
+
 .rest-open {
   top: 33px;
   left: 10px;
@@ -152,13 +159,14 @@ html, body {
 }
 
 #map {
-  width: 100vw;
+  width: 100%;
   height: 60vh;
 }
 #panel {
-  width: 100vw;
-  height: 40vh;
+  width: 100%;
+  height: 35vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .page {

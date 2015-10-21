@@ -5,9 +5,11 @@
 
 
   $(function() {
-    var directionsService = new google.maps.DirectionsService();
-    var directionsDisplay = new google.maps.DirectionsRenderer();
-    var stoppingPoint;
+    var directionsService = new google.maps.DirectionsService(),
+        directionsDisplay = new google.maps.DirectionsRenderer(),
+        stoppingPoint,
+        businesses,
+        transitionSpeed = 500;
 
     var map = new google.maps.Map(document.getElementById('map'), {
      zoom:7,
@@ -48,7 +50,7 @@
 
     function listRestaurants(result) {
       // remove fast food and convenience stores
-      var businesses = removeUndesirableRestaurants(JSON.parse(result).businesses);
+      businesses = removeUndesirableRestaurants(JSON.parse(result).businesses);
       // append listings to page
       for (var i = 0; i < businesses.length; i++) {
         var b = businesses[i];
@@ -67,10 +69,7 @@
         var categories = [].concat.apply([], b.categories);
         categories = categories.filter(function(el, index) {
           return !(index % 2);
-        }).slice(0,2).join(', '); // trim down
-
-        // remove undesirable categories
-
+        }).slice(0,1).join(', '); // trim down (this isn't particularly helpful, but does fix UI issues)
 
         var request = { // this is a crappy way to code it (maybe)
           origin: stoppingPoint, 
@@ -82,43 +81,22 @@
           if (status == google.maps.DirectionsStatus.OK) {
             distance = response.routes[0].legs[0].distance.text;
             // since this will finish processing after listing is appended to page, identify location and add
-            $('#rest-'+b.id).find('.rest-distance').text(distance);
+            $('#rest-'+b.id).find('.rest-distance').text('('+distance+' from stop)');
           }
         });
         console.log(distance);
         var listing = '<div class="rest" id="rest-'+b.id+'">\
                         <div class="rest-name">\
                           <a target="_blank" href="'+b.mobile_url+'">'+b.name+'</a>\
-                          <span class="rest-distance"></span>\
-                          </div>\
-                        <div class="'+closed_class+'">'+closed_message+'</div>\
+                        </div>\
+                        <div class="'+closed_class+'">'+closed_message+'&nbsp;&nbsp;&nbsp;<span class="rest-distance"></span></div>\
                         <div class="rest-rating"><img src="'+b.rating_img_url_small+'"/></div>\
                         <div class="rest-image"><img src="'+b.image_url+'" /></div>\
                         <div class="rest-categories">'+categories+'</div>\
                         <div class="rest-select" id="'+b.id+'">Select</div>\
                       </div>';
-        $('.restaurants-container').append(listing);
-        
+        $('.restaurants-container').append(listing); 
       }
-      // apply click handler that sends mapping information
-      $('.rest-select').click(function() {
-        // loop through businesses searching for id
-        for (var i = 0; i < businesses.length; i++) {
-          var origin, lat, lng, ll, waypoint, destination;
-          if (businesses[i].id == $(this).attr('id')) {
-            // if user changed these, then too bad (at least for demo version)
-            origin = $('input[name="origin"]').val();
-            lat = businesses[i].location.coordinate.latitude,
-            lng = businesses[i].location.coordinate.longitude;
-            ll = new google.maps.LatLng(lat,lng);
-            waypoint = [{location: ll, stopover: true}];
-            // console.log(waypoint);
-            destination = $('input[name="destination"]').val();
-            makeRequest(origin, waypoint, destination, true); // show maps and directions now
-            // console.log(businesses[i]);
-          }
-        }
-      })
     }
 
     function findStopStep(steps) {
@@ -153,10 +131,17 @@
         url: '/stop/'+stoppingPoint+'/'+radius_filter,
         type: "GET",
         success: function(result) {
-          // call external function on results
-          // console.log(ll, steps[index].end_location.lat() + ',' + steps[index].end_location.lng());
-          // console.log(result);
           listRestaurants(result);
+          // animate after restaurants are listed (** add spinner?)
+          $('.first').animate({
+            left: '-100vw'
+          }, transitionSpeed);
+          $('.second').animate({
+            left: '0vw'
+          }, transitionSpeed);
+          $('.third').animate({
+            left: '100vw'
+          }, transitionSpeed);
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus, errorThrown);
@@ -231,6 +216,64 @@
       // generate map
       makeRequest(origin, [], destination, false); // no waypoints, not final route
       // ev.preventDefault();
-    })
+    });
+
+    /**
+     * Click handler on Select button for restaurant choices.
+     * First searches for the business object this button corresponds with and identifies the route and loads the map.
+     * Triggers transition to that page (not as a callback to map request, for now
+      */
+    $(document).on('click', '.rest-select', function() {
+      // loop through businesses searching for id
+      for (var i = 0; i < businesses.length; i++) {
+        var origin, lat, lng, ll, waypoint, destination;
+        if (businesses[i].id == $(this).attr('id')) {
+          // if user changed these, then too bad (at least for demo version)
+          origin = $('input[name="origin"]').val();
+          lat = businesses[i].location.coordinate.latitude,
+          lng = businesses[i].location.coordinate.longitude;
+          ll = new google.maps.LatLng(lat,lng);
+          waypoint = [{location: ll, stopover: true}];
+          // console.log(waypoint);
+          destination = $('input[name="destination"]').val();
+          makeRequest(origin, waypoint, destination, true); // show maps and directions now
+          // console.log(businesses[i]);
+        }
+      }
+      // transition
+      $('.second').animate({
+        left: '-100vw'
+      }, transitionSpeed);
+      $('.third').animate({
+        left: '0vw'
+      }, transitionSpeed);
+    });
+
+    /**
+     * Click handler for moving back to search view
+     */
+    $('.second .header').click(function() {
+      $('.second').animate({
+        left: '100vw'
+      }, transitionSpeed);
+      $('.first').animate({
+        left: '0vw'
+      }, transitionSpeed);
+      // empty restaurants
+      $('.restaurants-container').empty();
+    });
+
+    /**
+     * Click handler for moving back to restaurant view
+     */
+    $('.third .header').click(function() {
+      $('.third').animate({
+        left: '100vw'
+      }, transitionSpeed);
+      $('.second').animate({
+        left: '0vw'
+      }, transitionSpeed);
+    });
+
     
   })
